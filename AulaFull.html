@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tarefas</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #001f3f, #0074D9);
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #00ffcc;
+      text-align: center;
+    }
+
+    #taskListContainer {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #ffffff10;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .task {
+      background-color: #e0f7fa;
+      color: #003366;
+      margin-bottom: 10px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .task:hover {
+      background-color: #b2ebf2;
+    }
+
+    .task input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .task.completed {
+      text-decoration: line-through;
+      background-color: #a5d6a7;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      background-color: #00cc99;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #009966;
+    }
+
+    .editBtn {
+      background: none;
+      border: none;
+      color: #0074D9;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #message {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Lista de Tarefas</h2>
+
+  <div id="taskListContainer">
+    <div id="taskList"></div>
+
+    <input type="text" id="newTaskInput" placeholder="Adicionar nova tarefa">
+    <button onclick="addTask()">Adicionar</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function showMessage(msg, isError = false) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.textContent = msg;
+      messageDiv.style.color = isError ? 'red' : '#00ffcc';
+      setTimeout(() => messageDiv.textContent = '', 3000);
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'task';
+        if (task.completed) taskDiv.classList.add('completed');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.onchange = () => {
+          tasks[index].completed = !tasks[index].completed;
+          saveTasks();
+          renderTasks();
+        };
+
+        const span = document.createElement('span');
+        span.textContent = task.text;
+
+        const editBtn = document.createElement('button');
+        editBtn.innerHTML = '✏️';
+        editBtn.className = 'editBtn';
+        editBtn.onclick = () => {
+          const newText = prompt('Editar tarefa:', task.text);
+          debugger;
+
+          if (newText !== null) {
+            if (newText.trim() === '') {
+              showMessage('A tarefa não pode ser vazia!', true);
+              return;
+            }
+
+            tasks[index].text = newText.trim();
+            saveTasks();
+            renderTasks();
+            showMessage('Tarefa editada com sucesso!');
+          }
+        };
+
+        const taskContent = document.createElement('div');
+        taskContent.style.display = 'flex';
+        taskContent.style.alignItems = 'center';
+        taskContent.appendChild(checkbox);
+        taskContent.appendChild(span);
+
+        taskDiv.appendChild(taskContent);
+        taskDiv.appendChild(editBtn);
+        taskList.appendChild(taskDiv);
+      });
+    }
+
+    function addTask() {
+      const newTaskInput = document.getElementById('newTaskInput');
+      const text = newTaskInput.value.trim();
+      if (text == '') {
+        showMessage('Erro: a tarefa não pode ser vazia.', true); // ⚠️ Ponto 4
+        return;
+      }
+
+      tasks.push({ text, completed: false });
+      saveTasks();
+      renderTasks();
+      newTaskInput.value = '';
+      showMessage('Tarefa adicionada com sucesso!');
+    }
+
+    renderTasks();
+  </script>
+
+</body>
+</html>
