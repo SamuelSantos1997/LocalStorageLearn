@@ -1,24 +1,19 @@
-Este projeto é uma aplicação simples de lista de tarefas (To-Do List) feita com HTML, CSS e JavaScript puro, utilizando localStorage para manter os dados persistentes mesmo após atualizar ou fechar a página.
+About the Project
+This is a simple To-Do List application built with HTML, CSS, and vanilla JavaScript, using localStorage to keep data persistent even after refreshing or closing the page.
 
-✅ Funcionalidades
-✔️ Adicionar nova tarefa
+Features
 
-✔️ Marcar tarefa como concluída
+Add new tasks
+Mark tasks as completed
+Edit tasks using prompt()
+Prevent empty tasks from being added
+Visual success and error messages
+Data persistence with localStorage
+Hover effects on task items
+debugger support for testing and fixes when needed
 
-✔️ Editar tarefa com prompt()
+Goal
+The goal of this project was to deepen the understanding of JavaScript development, particularly the use of localStorage for data storage. All expected objectives are listed in the features section above.
 
-✔️ Verificar e impedir o cadastro de tarefas vazias
-
-✔️ Mensagens de sucesso e erro visuais
-
-✔️ Persistência com localStorage
-
-✔️ Efeito visual ao passar o mouse sobre as tarefas
-
-🐞 Suporte ao uso de debugger para testes e correções caso necssário. 
-
-A ideia do projeto foi aprimorar e conhecer melhor toda a parte de desenvolvimento de javaScript utilizando do localStorage para salvar as informações do mesmo.
-Os Objetivos foram listados acima do que se era esperado.
-
-Foi colocados tudo em um arquivo html somente para poder abrir e rodar em qualquer computador, facilitando correção caso necessário.
-Pode ser aprimorado utilizando de um local host para rodar e com isso inserir uma pasta exclusiva para CSS, uma para Java Script e outra somente para os HTML.
+Notes
+Everything was placed in a single HTML file so it can be opened and run on any computer, making corrections easier when needed. It can be improved by running it on a local server and separating the code into dedicated folders for CSS, JavaScript, and HTML.
